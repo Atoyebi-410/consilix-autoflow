@@ -114,8 +114,8 @@ test-results/
 
 node_modules/
 
-# ==============================
+# ================================
 # Environment-specific Docker data
-# ==============================
+# ================================
 
-postgres_data/
+postgres_data/  
