@@ -3,6 +3,8 @@ from app.core.config import settings
 from app.api.v1.health import router as health_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.automations import router as automation_router
+from app.api.v1.automation_steps import router as automation_steps_router
+from app.api.v1.executions import router as execution_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -21,6 +23,16 @@ app.include_router(
 
 app.include_router(
     automation_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    automation_steps_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    execution_router,
     prefix="/api/v1",
 )
 

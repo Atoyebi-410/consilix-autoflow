@@ -36,3 +36,35 @@ class Automation(Base):
     )
 
     user = relationship("User", back_populates="automations")
+    steps = relationship(
+        "AutomationStep", 
+        back_populates="automation", 
+        cascade="all, delete-orphan",
+        order_by="AutomationStep.position"
+    )
+
+    executions = relationship(
+        "AutomationExecution",
+        back_populates="automation",
+        cascade="all, delete-orphan",
+    )
+
+    schedule_enabled: Mapped[bool] = mapped_column(
+    default=False,
+    nullable=False,
+    )
+
+    schedule_cron: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    schedule_timezone: Mapped[str] = mapped_column(
+        String(100),
+        default="UTC",
+        nullable=False,
+    )
+    next_run_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )

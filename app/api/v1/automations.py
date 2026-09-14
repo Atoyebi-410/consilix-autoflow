@@ -66,3 +66,59 @@ def get_automation(
         )
 
     return automation
+
+@router.patch(
+    "/(automation_id)",
+    response_model=AutomationResponse,
+)
+def update_automation(
+        automation_id: int,
+        data: AutomationUpdate,
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user),
+):
+    automation = automation_service.get_automation(
+        db,
+        automation_id,
+        current_user.id,
+    )
+
+    if not automation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Automation not found",
+        )
+
+    return automation_service.update_automation(
+        db,
+        automation,
+        data,
+    )
+
+@router.delete(
+    "/(automation_id)",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+def delete_automation(
+    automation_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    automation = automation_service.get_automation(
+        db,
+        automation_id,
+        current_user.id,
+    )
+
+    if not automation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Automation not found",
+        )
+
+    automation_service.delete_automation(
+        db,
+        automation,
+    )
+
+    

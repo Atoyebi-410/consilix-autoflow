@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.models.automation import Automation
 from app.repositories import automation as automation_repository
 from app.schemas.automation import AutomationCreate, AutomationUpdate
+from app.services.scheduler import calculate_next_run
 
 def create_automation(
         db: Session,
@@ -12,6 +13,10 @@ def create_automation(
         name=data.name,
         description=data.description,
         user_id=user_id,
+        schedule_enabled=data.schedule_enabled,
+        schedule_cron=data.schedule_cron,
+        schedule_timezone=data.schedule_timezone,
+        next_run_at = None
     )
 
     return automation_repository.create_automation(

@@ -9,18 +9,36 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "alembic>=1.19.2",
+    "celery>=5.6.3",
+    "croniter>=6.2.4",
     "email-validator>=2.3.0",
     "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "playwright>=1.62.0",
     "psycopg[binary]>=3.3.5",
     "pwdlib[argon2]>=0.3.1",
     "pydantic-settings>=2.15.0",
     "pyjwt>=2.13.0",
     "python-multipart>=0.0.32",
+    "redis>=8.1.0",
     "sqlalchemy>=2.0.52",
     "uvicorn[standard]>=0.52.4",
 ]
 
 [project.scripts]
 consilix-autoflow = "consilix_autoflow:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
 
 
